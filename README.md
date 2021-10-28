@@ -4,6 +4,7 @@ This is a repository to maintain my competitive programming progress, and the so
 
 
 You can find me on various coding platforms below:
+---
 
  - [codeforces](https://codeforces.com/profile/aniket_pathak)  
  - [codechef](https://www.codechef.com/users/aniketpathak_7)
