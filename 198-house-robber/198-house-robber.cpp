@@ -1,22 +1,19 @@
 class Solution {
 public:
-    int solve(vector<int> &nums, int n, vector<int> &dp)
-    {
-        if (n <= -1) return 0;
-
-        if(dp[n]!=-1)
-            return dp[n];
-
-        int l = nums[n] + solve(nums, n - 2, dp);
-
-        int r = solve(nums, n - 1, dp);
-
-        return dp[n]=max(l, r);
-    }
     int rob(vector<int>& nums) {
-         int size= nums.size();
-    vector<int> dp(size, -1);
-    solve(nums, size-1, dp);
-         return dp[size-1];
+        int n = nums.size();
+     int prev = nums[0];
+    int prev2 = 0;
+    for (int i = 1; i < n; i++)
+    {
+        int take = nums[i];
+        if (i > 1)
+            take += prev2;
+        int not_take = prev;
+        int curr = max(take, not_take);
+        prev2 = prev;
+        prev = curr;
+    }
+   return prev;
     }
 };
