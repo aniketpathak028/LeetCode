@@ -18,9 +18,41 @@ public:
         return dp[i][j]= mini<=0 ? 1 : mini;
     }
     int calculateMinimumHP(vector<vector<int>>& dungeon) {
-        int r = dungeon.size();
-        int c = dungeon[0].size();
-        vector<vector<int>> dp(r, vector<int>(c, -1));
-        return solve(0, 0, dungeon, r, c,dp);
+        int x = dungeon.size();
+        int y = dungeon[0].size();
+        vector<vector<int>> dp(x, vector<int>(y, -1));
+        // return solve(0, 0, dungeon, r, c,dp);
+        
+        // vector<vector<int>> dp(x, vector<int>(y, 0));
+
+    for (int i = x - 1; i >= 0; i--)
+    {
+        for (int j = y-1; j >= 0; j--)
+        {
+            if (i == x - 1 && j == y - 1)
+            {
+                // base-case-intialization
+                dp[x - 1][y - 1] = dungeon[x - 1][y - 1] > 0 ? 1 : -dungeon[x - 1][y - 1] + 1;
+            }
+            else
+            {
+                int rgt = 1e8;
+                int dwn = 1e8;
+                if (j < y - 1)
+                    rgt = dp[i][j + 1];
+                if (i < x - 1)
+                    dwn = dp[i + 1][j];
+
+                int mini = min(rgt, dwn) - dungeon[i][j];
+
+                if (mini <= 0)
+                    dp[i][j] = 1;
+                else
+                    dp[i][j] = mini;
+            }
+        }
+    }
+
+    return dp[0][0];
     }
 };
