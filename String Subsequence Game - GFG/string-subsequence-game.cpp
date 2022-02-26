@@ -7,6 +7,11 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
+    int isVowel(char ch)
+    {
+        return (0x208222 >> (ch & 0x1f)) & 1;
+        // same as (2130466 >> (ch & 31)) & 1;
+    }
     set<string> allPossibleSubsequences(string S) {
         set<string> s;
         int n = S.length();
@@ -15,7 +20,7 @@ class Solution {
             for(int j=0; j<n; j++){
                 if((1<<j) & i) sub+=S[j];
             }
-            if((sub[0]=='a' || sub[0]=='e'||sub[0]=='i'||sub[0]=='o'||sub[0]=='u')&&(sub[sub.length()-1]!='a'&&sub[sub.length()-1]!='e'&&sub[sub.length()-1]!='i'&&sub[sub.length()-1]!='o'&&sub[sub.length()-1]!='u')) s.insert(sub);
+            if(isVowel(sub[0]) && !isVowel(sub[sub.length()-1])) s.insert(sub);
         }
         return s;
     }
