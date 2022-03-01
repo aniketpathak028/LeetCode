@@ -5,7 +5,7 @@ public:
         if(n==1) return false;
         int sum = 0; 
         for(auto i:nums) sum+=i;
-        if(sum%2) return false;
+        if(sum&1) return false;
         else{
             sum= sum/2;
             vector<vector<bool>> dp(n, vector<bool>(sum+1, false));
