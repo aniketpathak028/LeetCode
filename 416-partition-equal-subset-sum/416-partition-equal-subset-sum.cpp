@@ -9,19 +9,23 @@ public:
         else{
             sum= sum/2;
             vector<vector<bool>> dp(n, vector<bool>(sum+1, false));
+            vector<bool> curr(sum+1, false);
+            vector<bool> prev(sum+1, false);
+            
             // base case initialization
-            for(int i=0; i<n; i++) dp[i][0]= true;
-            if(sum>=nums[0]) dp[0][nums[0]]= true;
+            for(int i=0; i<n; i++) prev[0]= true;
+            if(sum>=nums[0]) prev[nums[0]]= true;
 
             for(int i=1; i<n; i++){
                 for(int j=1; j<=sum; j++){
-                    bool not_pick = dp[i-1][j];
+                    bool not_pick = prev[j];
                     bool pick = false;
-                    if(nums[i]<=j) pick= dp[i-1][j-nums[i]];
-                    dp[i][j]= pick||not_pick;
+                    if(nums[i]<=j) pick= prev[j-nums[i]];
+                    curr[j]= pick|not_pick;
                 }
+                prev= curr;
             }
-            return dp[n-1][sum];
+            return prev[sum];
         }
     }
 };
