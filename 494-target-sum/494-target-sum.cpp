@@ -13,6 +13,7 @@ public:
         return plus+minus;
     }
     int findTargetSumWays(vector<int>& nums, int target) {
-        return solve(nums.size()-1, nums, target);
+        int n= nums.size();
+        return solve(n-1, nums, target);
     }
 };
