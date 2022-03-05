@@ -105,17 +105,14 @@ Node* buildTree(string str)
 class Solution {
   public:
     //Function to return maximum path product from any node in a tree.
-    long long maxScore(Node* root){
+    long long findMaxScore(Node* root)
+    {
         if(root==NULL) return 1;
         
         long long left, right;
-        left = maxScore(root->left)*root->data;
-        right = maxScore(root->right)*root->data;
+        left = findMaxScore(root->left)*root->data;
+        right = findMaxScore(root->right)*root->data;
         return max(left, right);
-    }
-    long long findMaxScore(Node* root)
-    {
-        return maxScore(root);
     }
 };
 
