@@ -108,11 +108,7 @@ class Solution {
     long long findMaxScore(Node* root)
     {
         if(root==NULL) return 1;
-        
-        long long left, right;
-        left = findMaxScore(root->left)*root->data;
-        right = findMaxScore(root->right)*root->data;
-        return max(left, right);
+        return max(findMaxScore(root->left)*root->data, findMaxScore(root->right)*root->data);
     }
 };
 
