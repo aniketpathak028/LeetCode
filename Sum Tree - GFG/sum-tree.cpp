@@ -106,7 +106,6 @@ class Solution
          
          if(findSum(root->left)+findSum(root->right)==root->data) return (isSumTree(root->left) && isSumTree(root->right));
          else return false;
-         
     }
 };
 
