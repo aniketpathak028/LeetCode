@@ -1,7 +1,6 @@
 class Solution {
 public:
     bool solve(int i, int last, vector<int> &stones, map<int, int> &m, vector<vector<int>> &dp){
-        // base-case
         if(i==stones.size()-1) return true;
         
         if(dp[i][last]!=-1) return dp[i][last];
@@ -17,7 +16,7 @@ public:
     }
     bool canCross(vector<int>& stones) {
         int n= stones.size();
-        map<int, int> m; // map to store all the existing elements and their indices
+        map<int, int> m;
         for(int i=0; i<n; i++) m[stones[i]]=i;
         vector<vector<int>> dp(n+1, vector<int>(n+1, -1));
         return solve(0, 0, stones, m, dp);
