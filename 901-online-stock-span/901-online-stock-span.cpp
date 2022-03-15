@@ -1,8 +1,6 @@
 class StockSpanner {
 public:
-    StockSpanner() {
-        
-    }
+    StockSpanner() {}
     stack<int> st;
     vector<int> NGL;
     vector<int> prices;
@@ -16,8 +14,8 @@ public:
                if(st.empty()) NGL.push_back(1+i);
                else NGL.push_back(i-st.top());
            }
-            st.push(i);
-            return NGL[i++];
+        st.push(i);
+        return NGL[i++];
     }
 };
 
