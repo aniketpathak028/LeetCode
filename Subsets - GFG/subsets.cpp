@@ -11,24 +11,19 @@ using namespace std;
 class Solution
 {
     public:
-    void solve(int i, vector<int> &A, vector<int> subset, vector<vector<int>> &ans){
-        if(i==A.size()){
-            ans.push_back(subset);
-            return;
-        }
-        
-        subset.push_back(A[i]);
-        solve(i+1, A, subset, ans);
-        subset.pop_back();
-        solve(i+1, A, subset, ans);
-    }
     vector<vector<int>> subsets(vector<int>& A)
     {
-       vector<vector<int>> ans;
-       vector<int> subset;
-       solve(0, A, subset, ans);
-       sort(ans.begin(), ans.end());
-       return ans;
+        int n= A.size();
+        vector<vector<int>> ans;
+        for(int i=0; i<(1<<n); i++){
+            vector<int> sub;
+            for(int j=0; j<n; j++){
+                if(i&(1<<j)) sub.push_back(A[j]);
+            }
+            ans.push_back(sub);
+        }
+        sort(ans.begin(), ans.end());
+        return ans;
     }
 };
 
