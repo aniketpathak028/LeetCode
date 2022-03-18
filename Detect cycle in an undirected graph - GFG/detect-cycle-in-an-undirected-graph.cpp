@@ -12,8 +12,7 @@ class Solution {
         for (auto it : adj[i])
         {
             if (!vis[it]){
-                if (checkCycle(it, i, vis, adj))
-                    return true;
+                 if(checkCycle(it, i, vis, adj)) return true;
             }
             else if (it != prev)
                 return true;
