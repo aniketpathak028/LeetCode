@@ -13,9 +13,8 @@ public:
     }
     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
         vector<vector<int>> ans;
-        int n= graph.size(); // number of nodes
+        int n= graph.size();
         vector<int> adj[n];
-        // creating the adjacency list
         for(int i=0; i<n; i++) {
             for(auto it: graph[i]){
                 adj[i].push_back(it);
