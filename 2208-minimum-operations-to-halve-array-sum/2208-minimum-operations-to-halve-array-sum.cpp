@@ -2,17 +2,20 @@ class Solution {
 public:
     int halveArray(vector<int>& nums) {
         priority_queue<double> pq;
-        for(auto it: nums) pq.push(it);
-        double sum = 0;
-        for(auto it: nums) sum+=it;
-        double half = sum/2;
+        double sum=0;
+        for(auto it: nums){
+            pq.push(it);
+            sum+=it;
+        }
+        double half= sum/2;
         int ans=0;
         while(sum>half){
             ans++;
-            double maxi= pq.top();
-            sum-=maxi/2;
+            double top = pq.top();
             pq.pop();
-            pq.push(maxi/2);
+            top = top/2;
+            sum-=top;
+            pq.push(top);
         }
         return ans;
     }
