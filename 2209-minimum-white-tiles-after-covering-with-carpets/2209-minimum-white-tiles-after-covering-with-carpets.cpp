@@ -8,11 +8,7 @@ public:
         for(int i=n-2; i>=0; i--) sfx[i]= sfx[i+1] + (floor[i]=='1');
     }
     int solve(string &floor, int numCarpets, int carpetLen, int i, int used){
-        if (i >= floor.size()) {
-            return 0;
-        } else if (used == numCarpets) {
-            return sfx[i];
-        }
+        if(used==numCarpets | i>=floor.size()) return i>=floor.size() ? 0 : sfx[i];
         if(dp[i][used]!=-1) return dp[i][used];
         return dp[i][used]= min(solve(floor, numCarpets, carpetLen, i+carpetLen, used+1), (floor[i]=='1')+solve(floor, numCarpets, carpetLen, i+1, used));
     }
