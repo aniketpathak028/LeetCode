@@ -6,7 +6,7 @@ using namespace std;
 class Solution {
   public:
     // Function to find the number of islands.
-    bool vis[510][510];
+    int vis[501][501];
     void dfs(int i, int j, int n, int m, vector<vector<char>> &grid){
         if(i<0 || j<0 || i>=n || j>=m || grid[i][j]=='0' || vis[i][j]==1) return;
         
