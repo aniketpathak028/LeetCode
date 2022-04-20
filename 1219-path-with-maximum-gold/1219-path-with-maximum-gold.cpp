@@ -1,23 +1,21 @@
 class Solution {
 public:
-    int getMaximumGold(vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
-        int maxGold = 0;
-        for (int r = 0; r < m; r++)
-            for (int c = 0; c < n; c++)
-                maxGold = max(maxGold, findMaxGold(grid, m, n, r, c));
-        return maxGold;
+    vector<vector<int>> dir= {{0,1}, {1,0}, {-1,0}, {0,-1}};
+    int findGold(int i, int j, vector<vector<int>> &grid){
+      if(i<0 || j<0 || i>=grid.size() || j>=grid[0].size() || !grid[i][j]) return 0;
+      int start_val= grid[i][j], maxi= start_val;
+      grid[i][j]= 0;
+      for(auto &it: dir){
+        maxi= max(maxi, start_val+findGold(i+it[0], j+it[1], grid));
+      }
+      grid[i][j]= start_val;
+      return maxi;
     }
-    
-    int DIR[5] = {0, 1, 0, -1, 0};
-    int findMaxGold(vector<vector<int>>& grid, int m, int n, int r, int c) {
-        if (r < 0 || r == m || c < 0 || c == n || grid[r][c] == 0) return 0;
-        int origin = grid[r][c];
-        grid[r][c] = 0; // mark as visited
-        int maxGold = 0;
-        for (int i = 0; i < 4; i++)
-            maxGold = max(maxGold, findMaxGold(grid, m, n, DIR[i] + r, DIR[i + 1] + c));
-        grid[r][c] = origin; // backtrack
-        return maxGold + origin;
+    int getMaximumGold(vector<vector<int>>& grid) {
+        int n= grid.size(), m= grid[0].size(), ans= 0; 
+        for(int i=0; i<n; ++i)
+          for(int j=0; j<m; ++j)
+            if(grid[i][j]>0) ans= max(ans, findGold(i, j, grid));
+        return ans;
     }
 };
