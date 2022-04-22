@@ -12,14 +12,14 @@ bool operator<(const Cluster &c1, const Cluster &c2){
 
 class Solution {
 public:
-    void dfs(int i, int j, vector<vector<int>> &grid, vector<vector<int>> &vis, Cluster &cls){
+    void dfs(int i, int j, vector<vector<int>> &grid, vector<vector<int>> &vis, Cluster &c){
       // out of bound cases, visited cells, and the cells that have been already quarantined
       if(i<0 || j<0 || i==grid.size() || j==grid[0].size() || vis[i][j] || grid[i][j]==-1) return;
       
       if(grid[i][j]==0){
         // this is an uncontaminated cell
-        cls.uc.insert({i,j}); // insert into the set of uc
-        cls.wall_count++; // increase the wall count
+        c.uc.insert({i,j}); // insert into the set of uc
+        c.wall_count++; // increase the wall count
         
         return;
       }
@@ -28,13 +28,13 @@ public:
       vis[i][j]= 1;
       
       // this is a contaminated cell
-      cls.c.insert({i,j});
+      c.c.insert({i,j});
       
       // run dfs for all neighbouring cells
-      dfs(i+1, j, grid, vis, cls);
-      dfs(i, j+1, grid, vis, cls);
-      dfs(i-1, j, grid, vis, cls);
-      dfs(i, j-1, grid, vis, cls);
+      dfs(i+1, j, grid, vis, c);
+      dfs(i, j+1, grid, vis, c);
+      dfs(i-1, j, grid, vis, c);
+      dfs(i, j-1, grid, vis, c);
     }
       
     int containVirus(vector<vector<int>>& isInfected) {
@@ -48,31 +48,31 @@ public:
           for(int i=0; i<n; ++i){
             for(int j=0; j<m; ++j){
               if(!vis[i][j] && isInfected[i][j]==1){
-                Cluster cls;
-                dfs(i, j, isInfected, vis, cls);
-                pq.push(cls); // push the cluster to the priority queue
+                Cluster c;
+                dfs(i, j, isInfected, vis, c);
+                pq.push(c); // push the cluster to the priority queue
               }
             }
           }
           
           if(pq.empty()) break; // if pq is empty there are no contaminated regions
           
-          Cluster cls= pq.top(); // find the most infecting cluster
+          Cluster c= pq.top(); // find the most infecting cluster
           pq.pop();
           
-          total_wall += cls.wall_count; // add the wall count of the cluster to the total count
+          total_wall += c.wall_count; // add the wall count of the cluster to the total count
           
           // make wall around the current cluster
-          for(auto &cell: cls.c){
+          for(auto &cell: c.c){
             // mark the cell as -1 so that it is no longer considered next time
             isInfected[cell.first][cell.second]= -1; 
           }
           
           // infect the neighbouring uncontaminated cells of all the remaining clusters
           while(!pq.empty()){
-            Cluster k= pq.top();
+            c= pq.top();
             pq.pop();
-            for(auto &cell: k.uc){
+            for(auto &cell: c.uc){
               isInfected[cell.first][cell.second]= 1;
             }
           }
