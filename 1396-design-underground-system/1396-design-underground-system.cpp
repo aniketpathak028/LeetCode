@@ -1,6 +1,6 @@
 class UndergroundSystem {
 public:
-    map<pair<string,string>,pair<int,int>> times; 
+    map<pair<string,string>,vector<int>> times; 
     map<int,pair<string,int>> travel;
   
     UndergroundSystem() {}
@@ -16,13 +16,13 @@ public:
         string to= stationName;
         
         // store the new time and increase the number count
-        times[{from,to}].first += time_taken;
-        times[{from,to}].second += 1;
+        times[{from,to}].push_back(time_taken);
     }
     
     double getAverageTime(string startStation, string endStation) {
-        double tot_time= times[{startStation, endStation}].first;
-        double tot_count= times[{startStation, endStation}].second;
+        double tot_time= 0;        
+        double tot_count= times[{startStation, endStation}].size();
+        for(auto it: times[{startStation, endStation}]) tot_time+= it;
         return tot_time/tot_count;
     }
 };
