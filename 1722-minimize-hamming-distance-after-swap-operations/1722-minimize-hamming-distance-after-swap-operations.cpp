@@ -28,7 +28,7 @@ public:
       
       int ans= 0;
       for(int i=0; i<n; ++i){
-          if(mp[findParent(i, parent)][target[i]]>0) mp[findParent(i, parent)][target[i]]--;
+          if(mp[findParent(i, parent)][target[i]]) mp[findParent(i, parent)][target[i]]--;
           else ans++;
       }
           
