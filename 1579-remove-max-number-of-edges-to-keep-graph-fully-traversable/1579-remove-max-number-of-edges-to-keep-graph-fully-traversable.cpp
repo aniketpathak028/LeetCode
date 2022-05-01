@@ -49,16 +49,20 @@ public:
       
         // now we check for type 1 and 2 edges
         for(auto &edge: edges){
-          if(edge[0]==1){
+          if(edge[0]==1){ 
+            // if both nodes are connected for a then skip and increment ans, else connect them
             if(a.connected(edge[1], edge[2])) ans++;
             else a.Union(edge[1], edge[2]);
           }else if(edge[0]==2){
+            // if both nodes are connected for b then skip and increment ans, else connect them
             if(b.connected(edge[1], edge[2])) ans++;
             else b.Union(edge[1], edge[2]);
           }
         }
       
+      // finally both Union Find a and b must have all nodes ie. their size 
+      // must be 2, (n-1 unions taken for n nodes)
       if(a.getSize()==2 && b.getSize()==2) return ans;
-      return -1;
+      return -1; // if the value of size>2 some nodes are not traversable by a or b
     }
 };
