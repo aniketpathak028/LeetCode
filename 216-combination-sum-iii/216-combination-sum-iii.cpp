@@ -11,16 +11,15 @@ public:
     
       if(sum==0 || k==0) return; // if the sum is exhausted or k digits have already been used
       
+      // not-pick
+      solve(i+1, sum, k, comb, ans);
+      
       // pick 
       if(i<=sum){
         comb.push_back(i);
         solve(i+1, sum-i, k-1, comb, ans);
         comb.pop_back();
       } 
-      
-      // not-pick
-      
-      solve(i+1, sum, k, comb, ans);
     }
     vector<vector<int>> combinationSum3(int k, int n) {
         vector<vector<int>> ans;
