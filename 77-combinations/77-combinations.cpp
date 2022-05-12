@@ -1,21 +1,24 @@
 class Solution {
 public:
-    void findCombinations(int i, int n, int k, int idx, vector<int> &perm, vector<vector<int>> &ans){
+    void findCominations(int i, int idx, int n, int k, vector<int> &comb, vector<vector<int>> &ans){
+      // base-case
       if(i>k){
-        ans.push_back(perm);
+        ans.push_back(comb);
         return;
       }
       
-      for(int num= idx; num<=n; ++num){
-          perm.push_back(num);
-          findCombinations(i+1, n, k, num+1, perm, ans);
-          perm.pop_back();
+      // iterate from idx to n and choose an element
+      for(int j=idx; j<=n; ++j){ 
+        comb.push_back(j); // push the element into the combination
+        findCominations(i+1, j+1, n, k, comb, ans); // find other permutations from idx+1
+        comb.pop_back(); // remove the element
       }
     }
+  
     vector<vector<int>> combine(int n, int k) {
         vector<vector<int>> ans;
-        vector<int> perm;
-        findCombinations(1, n, k, 1, perm, ans);
+        vector<int> comb;
+        findCominations(1, 1, n, k, comb, ans);
         return ans;
     }
 };
