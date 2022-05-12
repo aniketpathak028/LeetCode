@@ -8,16 +8,16 @@ public:
         return;
       }
       
-      unordered_map<int,int> mp;
+      unordered_set<int> set;
       
       for(int j=0; j<nums.size(); ++j){
-        if(!vis[j] && !mp[nums[j]]){
+        if(!vis[j] && !set.count(nums[j])){
           perm.push_back(nums[j]);
           vis[j]= 1;
           findPermutation(i+1, perm, nums, vis, ans);
           vis[j]= 0;
           perm.pop_back();
-          mp[nums[j]]= 1;
+          set.insert(nums[j]);
         }
       }
     }
