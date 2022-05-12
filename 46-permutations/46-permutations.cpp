@@ -1,29 +1,21 @@
 class Solution {
 public:
-    void findPermutation(int i, vector<int> &perm, vector<int> &nums, vector<int> &vis, vector<vector<int>> &ans){
-      // base-case
-      if(i==nums.size()) // when i exceeds the number of elements
-      {
-        ans.push_back(perm);
+    void findPermutations(int i, vector<int> &nums, vector<vector<int>> &ans){
+      if(i==nums.size()){
+        ans.push_back(nums);
         return;
       }
       
-      for(int j=0; j<nums.size(); ++j){
-        if(!vis[j]){ // check if this eleements has already been included or not
-          vis[j]= 1;
-          perm.push_back(nums[j]);
-          findPermutation(i+1, perm, nums, vis, ans);
-          perm.pop_back();
-          vis[j]= 0;
-        }
+      for(int idx=i; idx<nums.size(); idx++){
+        swap(nums[i], nums[idx]);
+        findPermutations(i+1, nums, ans);
+        swap(nums[i], nums[idx]);
       }
     }
+  
     vector<vector<int>> permute(vector<int>& nums) {
-        int n= nums.size();
         vector<vector<int>> ans;
-        vector<int> vis(n, 0); // visited array
-        vector<int> perm;
-        findPermutation(0, perm, nums, vis, ans);
+        findPermutations(0, nums, ans);
         return ans;
     }
 };
