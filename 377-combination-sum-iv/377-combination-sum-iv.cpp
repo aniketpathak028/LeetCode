@@ -4,13 +4,14 @@ public:
       // base-case
       if(target==0) return 1;
       
+      // check if dp contains the answer already
       if(dp[target]!=-1) return dp[target];
       
+      // iterate all elements in nums
       int res= 0;
-      
-      for(int j=0; j<nums.size(); ++j){
-        if(nums[j]<=target){
-          res+= findCombinations(target-nums[j], nums, dp);
+      for(auto &num: nums){
+        if(num<=target){
+          res+= findCombinations(target-num, nums, dp);
         }
       }
       
@@ -18,7 +19,6 @@ public:
     }
   
     int combinationSum4(vector<int>& nums, int target) {
-        int n= nums.size();
         vector<int> dp(target+1, -1);
         return findCombinations(target, nums, dp);
     }
