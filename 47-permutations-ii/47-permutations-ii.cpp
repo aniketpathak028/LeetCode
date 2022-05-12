@@ -26,7 +26,6 @@ public:
         vector<vector<int>> ans;
         vector<int> perm;
         vector<int> vis(n, 0);
-        sort(nums.begin(), nums.end());
         findPermutation(0, perm, nums, vis, ans);
         return ans;
     }
