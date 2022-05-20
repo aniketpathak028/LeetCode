@@ -1,20 +1,27 @@
 class Solution {
 public:
-    int uniquePaths(vector<vector<int>>& obstacleGrid, int i, int j, vector<vector<int>> &dp){
-        if((i<0 || j<0) || obstacleGrid[i][j]==1) return 0;
-        if(i==0 && j==0) return 1;
-        
+    int findUniquePaths(int i, int j, vector<vector<int>> &mat, vector<vector<int>> &dp){
+        // if the boundaries of the matrix are exceeded or an obstacle is reached
+        if(i<0 || j<0 || i==mat.size() || j==mat[0].size() || mat[i][j]) return 0;
+        // if the bottom-right corner is reached   
+        if(i==mat.size()-1 && j==mat[0].size()-1) return 1;
+      
+        // if dp vector contains the ans
         if(dp[i][j]!=-1) return dp[i][j];
-        
-        int up = uniquePaths(obstacleGrid, i-1, j, dp);
-        int left = uniquePaths(obstacleGrid, i, j-1, dp);
-        
-        return dp[i][j]=up + left;
+      
+        // find total path count
+        int path_count= 0;
+        // move-right
+        path_count+= findUniquePaths(i, j+1, mat, dp);
+        // move-down
+        path_count+= findUniquePaths(i+1, j, mat, dp);
+        // return total path count
+        return dp[i][j]= path_count;
     }
+  
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
-        int m = obstacleGrid.size();
-        int n = obstacleGrid[0].size();
-        vector<vector<int>> dp(m, vector<int> (n, -1));
-        return uniquePaths(obstacleGrid, m-1, n-1, dp);
+        int n= obstacleGrid.size(), m= obstacleGrid[0].size();
+        vector<vector<int>> dp(n, vector<int>(m, -1));
+        return findUniquePaths(0, 0, obstacleGrid, dp);
     }
 };
