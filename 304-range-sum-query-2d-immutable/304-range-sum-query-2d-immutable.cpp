@@ -1,14 +1,13 @@
 class NumMatrix {
 public:
-    int mat[200][200];
     int prefix[200][200];
   
     NumMatrix(vector<vector<int>>& matrix) {
         // initializing the matrix
         for(int i=0; i<matrix.size(); ++i){
           for(int j=0; j<matrix[0].size(); ++j){
-            
-            mat[i][j]= prefix[i][j]= matrix[i][j];
+            // set matr
+            prefix[i][j]= matrix[i][j];
             
             if(i>0) prefix[i][j]+= prefix[i-1][j];
             if(j>0) prefix[i][j]+= prefix[i][j-1];
