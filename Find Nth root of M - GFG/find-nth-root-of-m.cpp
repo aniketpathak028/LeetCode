@@ -7,16 +7,14 @@ class Solution{
 	public:
 	int NthRoot(int n, int m)
 	{
-	     long int a=0;
-	    long int ele=0;
-	    while(ele<=m){
-	        ele=pow(a,n);
-	        if(ele==m){
-	            return a;
-	        }
-	         a++;
-	    }
-	    return -1;
+	   int lo= 1, hi= m, mid;
+	   while(hi>=lo){
+	       mid= (lo+hi)/2;
+	       if(pow(mid,n)==m) return mid;
+	       if(pow(mid,n)>m) hi=mid-1;
+	       else lo= mid+1;
+	   }
+	   return -1;
 	}  
 };
 
