@@ -10,20 +10,16 @@ class Solution{
     // You need to complete this function
 
     // avoid space at the starting of the string in "move disk....."
-    void solve(int n, int s, int h, int d, int &c){
-        c++;
-        if(n==1) {
-            cout<<"move disk "<<n<<" from rod "<<s<<" to rod "<<d<<endl;
-            return;
-        }
-        solve(n-1, s, d, h, c);
-        cout<<"move disk "<<n<<" from rod "<<s<<" to rod "<<d<<endl;
-        solve(n-1, h, s, d, c);
-    }
     long long toh(int N, int from, int to, int aux) {
-        int c=0;
-        solve(N, from, aux, to, c);
-        return c;
+        if(N==1) {
+            cout<<"move disk "<<N<<" from rod "<<from<<" to rod "<<to<<endl;
+            return 1;
+        }
+        int count= 0;
+        count+= toh(N-1, from, aux, to);
+        cout<<"move disk "<<N<<" from rod "<<from<<" to rod "<<to<<endl;
+        count+= toh(N-1, aux, to, from);
+        return count+1;
     }
 
 };
