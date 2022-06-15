@@ -28,7 +28,7 @@ public:
       
         // try all indices as starting index to find maximum word chain
         int maxi= 1;
-        for(int i=0; i<n; ++i) maxi= max(maxi, solve(i, words, mpp, dp));
+        for(int i=n-1; i>=0; --i) maxi= max(maxi, solve(i, words, mpp, dp));
       
         return maxi;
     }
