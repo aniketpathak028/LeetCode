@@ -1,20 +1,72 @@
+struct Node {
+  Node* links[26];
+  bool flag;
+  
+  bool containsKey(char ch) {
+    return links[ch-'a']!=NULL;
+  }
+  
+  void createRef(char ch){
+    links[ch-'a']= new Node();
+  }
+  
+  Node* getNextRef(char ch){
+    return links[ch-'a'];
+  }
+};
+
+class Trie {
+  Node* root;
+public:
+  
+  Trie(){
+    root= new Node();
+  }
+  
+  void insert(string word){
+    Node* node= root;
+    for(int i=0; i<word.size(); ++i){
+      if(!node->containsKey(word[i])) node->createRef(word[i]);
+      node= node->getNextRef(word[i]);
+    }
+    node->flag= true;
+  }
+  
+  vector<string> startsWith(string prefix){
+    Node* node= root;
+    vector<string> ans;
+    for(int i=0; i<prefix.size(); ++i){
+      if(!node->containsKey(prefix[i])) return ans;
+      node= node->getNextRef(prefix[i]);
+    }
+    dfs(prefix, node, ans);
+    return ans;
+  }
+  
+  void dfs(string prefix, Node* node, vector<string> &ans){
+    if(ans.size()==3 || !node) return;
+    
+    if(node->flag) ans.push_back(prefix);
+    
+    for(char ch='a'; ch<='z'; ch++){
+      if(node->links[ch-'a']){
+        dfs(prefix+ch, node->links[ch-'a'], ans);
+      }
+    }
+  }
+};
+
 class Solution {
 public:
     vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
-        vector<vector<string>> ans; // answer vector
-        sort(products.begin(), products.end()); // sort products array
-        string toSearch= ""; // string to be searched at every character
-        for(auto ch: searchWord){ // iterate through the search word
-          vector<string> suggestions; // suggestions vector
-          toSearch+= ch; 
-          auto it= lower_bound(products.begin(), products.end(), toSearch); // finding the 1st matching word in the products vector
-          for(int pos= 0; pos<3 && it+pos!=products.end(); ++pos){ // iterate for 3 words from the 1st word
-            string foundWord= products[(it-products.begin())+pos]; 
-            if(foundWord.find(toSearch)) break; // if the matched substring is not a prefix break
-            suggestions.push_back(foundWord); // else add the word into suggestions
-          }
-          ans.push_back(suggestions); // add the suggestions into ans
+        Trie *obj= new Trie();
+        vector<vector<string>> ans;
+        for(auto &prod: products) obj->insert(prod);
+        string toSearch= "";
+        for(int i=0; i<searchWord.size(); ++i){
+          toSearch+= searchWord[i];
+          ans.push_back(obj->startsWith(toSearch));
         }
-        return ans;
+      return ans;
     }
 };
