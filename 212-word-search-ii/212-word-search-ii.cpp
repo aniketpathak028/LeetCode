@@ -40,7 +40,7 @@ class Trie{
 
     void dfs(int i, int j, Node* node, vector<vector<char>> &b, string word, vector<string> &ans){
       // array out of bound or trie doesn't contain character or visited cell
-      if(i<0 || j<0 || i==b.size() || j==b[0].size() || b[i][j]=='#' || !node->containsKey(b[i][j])) return;
+      if(i<0 || j<0 || i==b.size() || j==b[0].size() || b[i][j]=='#' || !node->links[b[i][j]-'a']) return;
       
       // add the current charcter to the word
       word+= b[i][j];
