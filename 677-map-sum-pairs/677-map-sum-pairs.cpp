@@ -1,6 +1,6 @@
 struct Node{
   Node* links[26];
-  int value= 0;
+  int value;
 
   bool containsKey(char ch){
     return links[ch-'a']!=NULL;
