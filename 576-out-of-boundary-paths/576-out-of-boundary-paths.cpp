@@ -1,7 +1,6 @@
 class Solution {
 public:
     int mod= 1e9+7;
-  
     int solve(int i, int j, int m, int n, int moves, vector<vector<vector<int>>> &dp){
       // if array out of bound add a move
       if(i<0 || j<0 || i==m || j==n) return 1;
