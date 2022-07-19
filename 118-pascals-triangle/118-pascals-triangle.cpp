@@ -1,12 +1,27 @@
 class Solution {
 public:
-   vector<vector<int>> generate(int n) {
-        vector<vector<int>> ans(n);             // initialize n rows
-        for(int i = 0; i < n; i++) {
-            ans[i] = vector<int>(i+1,1);        // ith row(0-indexed) has i+1 elements
-            for(int j = 1; j < i; j++)          // 1st and last elements will be 1, rest will be sum of two elements from above row
-                ans[i][j] = ans[i - 1][j] + ans[i - 1][j - 1];            
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> ans;
+        for(int i=0; i<numRows; ++i){
+          vector<int> row;
+          row.push_back(1);
+          if(i==0){
+            ans.push_back(row);
+            continue;
+          }
+          else if(i==1){
+            row.push_back(1);
+            ans.push_back(row);
+            continue;
+          }
+          else{
+            for(int j=0; j<ans[i-1].size()-1; ++j){
+              row.push_back(ans[i-1][j]+ans[i-1][j+1]);
+            }
+            row.push_back(1);
+            ans.push_back(row);
+          }
         }
-        return ans;
+      return ans;
     }
 };
