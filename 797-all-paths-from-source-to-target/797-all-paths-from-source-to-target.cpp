@@ -1,27 +1,24 @@
 class Solution {
 public:
-    void dfs(int i, int n, vector<int> adj[], vector<int> path, vector<vector<int>> &ans){
-        if(i==n-1){
-            path.push_back(n-1);
-            ans.push_back(path);
-            return;
-        }
-        path.push_back(i);
-        for(auto it: adj[i]){
-            dfs(it, n, adj, path, ans);
-        }
+    void dfs(int src, int dest, vector<int> path, vector<vector<int>> &graph, vector<vector<int>> &ans){
+      if(src==dest){
+        path.push_back(dest);
+        ans.push_back(path);
+        return;
+      }
+      
+      path.push_back(src);
+      
+      // try all the paths
+      for(auto it: graph[src]){
+        dfs(it, dest, path, graph, ans);
+      }
     }
+  
     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
         vector<vector<int>> ans;
-        int n= graph.size();
-        vector<int> adj[n];
-        for(int i=0; i<n; i++) {
-            for(auto it: graph[i]){
-                adj[i].push_back(it);
-            }
-        }
         vector<int> path;
-        dfs(0, n, adj, path, ans);
+        dfs(0, graph.size()-1, path, graph, ans);
         return ans;
     }
 };
