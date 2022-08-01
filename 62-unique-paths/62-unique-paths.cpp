@@ -1,23 +1,17 @@
 class Solution {
 public:
-    int totalPaths(int row, int col, vector<vector<int>> &dp)
-{
-    // Base-Case
-    if (row == 0 && col == 0)
-        return 1;
-    if (row < 0 || col < 0)
-        return 0;
-
-    if (dp[row][col] != -1)
-        return dp[row][col];
-
-    int up = totalPaths(row - 1, col, dp);
-    int left = totalPaths(row, col - 1, dp);
-
-    return dp[row][col] = up + left;
-}
+    int solve(int i, int j, int m, int n, vector<vector<int>> &dp){
+      if(i==m || j==n) return 0;
+      // base-case
+      if(i==m-1 && j==n-1) return 1;
+      
+      if(dp[i][j]!=-1) return dp[i][j];
+      
+      return dp[i][j]= solve(i+1, j, m, n, dp)+solve(i, j+1, m, n, dp);
+    }
+  
     int uniquePaths(int m, int n) {
         vector<vector<int>> dp(m, vector<int>(n, -1));
-   	return totalPaths(m - 1, n - 1, dp);
+        return solve(0, 0, m, n, dp);
     }
 };
