@@ -1,33 +1,37 @@
 class Solution {
 public:
+    int last(vector<int> &arr, int element){
+      int start= 0, end= arr.size()-1, mid, res= -1;
+      while(start<=end){
+        mid= start + (end-start)/2;
+        if(arr[mid]==element){
+          res= mid;
+          start= mid+1;
+        }
+        else if(element<arr[mid]) end= mid-1;
+        else start= mid+1;
+      }
+      return res;
+    }
+  
+    int first(vector<int> &arr, int element){
+      int start= 0, end= arr.size()-1, mid, res= -1;
+      while(start<=end){
+        mid= start + (end-start)/2;
+        if(arr[mid]==element){
+          res= mid;
+          end= mid-1;
+        }
+        else if(element<arr[mid]) end= mid-1;
+        else start= mid+1;
+      }
+      return res;
+    }
+  
     vector<int> searchRange(vector<int>& nums, int target) {
         vector<int> ans;
-        int first= -1, last= -1;
-        // find first occurence
-        int s= 0, e= nums.size()-1, m;
-        while(s<=e){
-          m= s+(e-s)/2;
-          if(nums[m]==target){
-            first= m;
-            e= m-1;
-          }
-          else if(nums[m]<target) s= m+1;
-          else e= m-1;
-        }
-        ans.push_back(first);
-      
-        // find last occurence
-        s= 0, e= nums.size()-1;
-        while(s<=e){
-          m= s+(e-s)/2;
-          if(nums[m]==target){
-            last= m;
-            s= m+1;
-          }
-          else if(nums[m]<target) s= m+1;
-          else e= m-1;
-        }
-        ans.push_back(last);
+        ans.push_back(first(nums, target));
+        ans.push_back(last(nums, target));
         return ans;
     }
 };
