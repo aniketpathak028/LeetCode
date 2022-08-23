@@ -10,19 +10,20 @@
  */
 class Solution {
 public:
-    bool isPalindrome(ListNode* head) {
-        vector<int> values;
-        ListNode* temp= head;
-        while(temp){
-            values.push_back(temp->val);
-            temp= temp->next;
-        }
+    ListNode* start; 
+    bool ans= true;
+    
+    void solve(ListNode* end){
+        if(!end) return;
+        solve(end->next);
         
-        int s= 0, e= values.size()-1;
-        while(s<=e){
-            if(values[s]!=values[e]) return false;
-            s++;e--;
-        }
-        return true;
+        if(start->val!=end->val) ans= false;
+        start= start->next;
+    }
+    
+    bool isPalindrome(ListNode* head) {
+        start= head;
+        solve(head);
+        return ans;
     }
 };
