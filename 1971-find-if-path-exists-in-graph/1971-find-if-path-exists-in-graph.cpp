@@ -1,26 +1,31 @@
 class Solution {
 public:
-    bool dfs(int node, int dest, vector<int> &vis, vector<int> adj[]){
-      if(node==dest) return true;
-      if(!vis[node]){
-        vis[node]= 1;
-        for(auto &it: adj[node]){
-          if(dfs(it, dest, vis, adj)) return true;
+    void bfs(int node, vector<int> adj[], vector<int> &vis){
+        queue<int> q;
+        q.push(node);
+        while(!q.empty()){
+            int curr= q.front();
+            q.pop();
+            vis[curr]= 1;
+            for(auto &it: adj[curr]){
+                if(!vis[it]){
+                    q.push(it);
+                }
+            }
         }
-      }
-      return false;
     }
-  
+    
     bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
-        // create adjacency list
+        // create adjacency-matrix
         vector<int> adj[n];
-        for(auto &edge: edges){
-          adj[edge[0]].push_back(edge[1]);
-          adj[edge[1]].push_back(edge[0]);
+        for(auto &e: edges){
+            adj[e[0]].push_back(e[1]);
+            adj[e[1]].push_back(e[0]);
         }
-        // run dfs to check the total number of valid paths
+        // create visited array
         vector<int> vis(n);
-      
-        return dfs(source, destination, vis, adj);
+        // call bfs for source-node
+        bfs(source, adj, vis);
+        return vis[destination];
     }
 };
