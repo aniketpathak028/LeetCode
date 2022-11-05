@@ -1,27 +1,18 @@
 class Solution {
 public:
-    int countVowelStrings(int n) {
-        
-        string vowels= "aeiou"; // all vowels in lexicographically sorted order
-        
-        vector<vector<int>> dp(5, vector<int>(n+1)); // dp vector
-      
+    int solve(int i, int n, vector<char> &vowels, vector<vector<int>> &dp){
         // base-case
-        for(int i=0; i<5; ++i) dp[i][0]= 1; // if n==0 return 1
-      
-        // tabulation
-        for(int i=4; i>=0; --i){
-          for(int j=1; j<=n; ++j){
-            int pick= 0, notPick= 0;
-            // pick i.e. pick this alphabet
-            pick= dp[i][j-1];
-            // notPick i.e. skip this alphabet
-            if(i<4) notPick= dp[i+1][j];
-            
-            dp[i][j]= pick+notPick;
-          }
-        }
-      
-        return dp[0][n]; // return all strings possible starting from 0 index and of n length
+        if(n==0) return 1;
+        if(i==vowels.size()) return 0;
+        
+        if(dp[i][n]!=-1) return dp[i][n];
+        
+        return dp[i][n]= solve(i, n-1, vowels, dp)+solve(i+1, n, vowels, dp);
+    }
+    
+    int countVowelStrings(int n) {
+        vector<char> vowels= {'a', 'e', 'i', 'o', 'u'};
+        vector<vector<int>> dp(5, vector<int>(n+1, -1));
+        return solve(0, n, vowels, dp);
     }
 };
