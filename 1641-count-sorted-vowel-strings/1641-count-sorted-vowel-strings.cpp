@@ -1,18 +1,22 @@
 class Solution {
 public:
-    int solve(int i, int n, vector<char> &vowels, vector<vector<int>> &dp){
-        // base-case
-        if(n==0) return 1;
-        if(i==vowels.size()) return 0;
-        
-        if(dp[i][n]!=-1) return dp[i][n];
-        
-        return dp[i][n]= solve(i, n-1, vowels, dp)+solve(i+1, n, vowels, dp);
-    }
     
     int countVowelStrings(int n) {
         vector<char> vowels= {'a', 'e', 'i', 'o', 'u'};
-        vector<vector<int>> dp(5, vector<int>(n+1, -1));
-        return solve(0, n, vowels, dp);
+        vector<vector<int>> dp(6, vector<int>(n+1, -1));
+        // base-case
+        for(int i=0; i<=5; ++i){
+            for(int j=0; j<=n; ++j){
+                if(i==5) dp[i][j]= 0;
+                if(j==0) dp[i][j]= 1;
+            }
+        }
+        // tabulation
+        for(int i= 4; i>=0; --i){
+            for(int j=1; j<=n; ++j){
+                dp[i][j]= dp[i][j-1]+dp[i+1][j];
+            }
+        }
+        return dp[0][n];
     }
 };
