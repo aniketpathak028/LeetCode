@@ -1,36 +1,40 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
-    bool checkCycle(int i, int prev, vector<bool> &vis, vector<int> adj[])
-    {
-        vis[i] = 1;
-        for (auto it : adj[i])
-        {
-            if (!vis[it]){
-                 if(checkCycle(it, i, vis, adj)) return true;
-            }
-            else if (it != prev)
-                return true;
-        }
-        return false;
-    }
     bool isCycle(int V, vector<int> adj[]) {
-        vector<bool> vis(V, 0);
-        for (int i = 0; i < V; i++)
-        {
-            if (!vis[i] && checkCycle(i, -1, vis, adj))
-                return true;
+        vector<int> vis(V, 0);
+        
+        for(int i=0; i<V; ++i){
+            if(!vis[i]){
+                queue<pair<int,int>> q;
+                q.push({i,-1});
+                vis[i]= 1;
+                
+                while(!q.empty()){
+                   int node= q.front().first;
+                   int parent= q.front().second;
+                   q.pop();
+                   
+                   for(auto &it: adj[node]){
+                        if(!vis[it]) {
+                            q.push({it,node});
+                            vis[it]= 1;
+                        }else if(it!=parent) return true;
+                   }
+                }
+            }
         }
+        
         return false;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 int main() {
     int tc;
     cin >> tc;
@@ -52,4 +56,5 @@ int main() {
             cout << "0\n";
     }
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
